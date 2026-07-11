@@ -2,9 +2,8 @@
 
 An original Python implementation of the model in Krusell, Mukoyama, Rogerson
 & Şahin (2017), *"Gross Worker Flows over the Business Cycle"*, American
-Economic Review 107(11): 3447–3476 — written from the paper's equations, with
-the official replication package (`../Replication_AER_2012_1662/`, read-only)
-as the arbiter of implementation detail wherever the text is silent.
+Economic Review 107(11): 3447–3476 — written from the paper's equations, based on 
+the official replication package, wherever the text is silent.
 
 **Scope: model only.** The empirical work (CPS/SIPP gross-flow construction,
 measurement-error corrections, seasonal adjustment) is not reproduced.
@@ -17,14 +16,11 @@ the data columns of its tables are the published values.
 |---|---|---|
 | Table 5 | average gross-flow matrix, steady state | matches published model output to ~3e-6 |
 | Table 6 | flow rates by wealth quintile | matches to ~1e-5 |
-| Table 7 | cyclical behaviour of stocks (u, lfpr, E) | signs and magnitudes; see COMPARISON.md |
-| Table 8C | cyclical behaviour of the six gross flows | signs and magnitudes; see COMPARISON.md |
-| Table 9 | job-to-job rate over the cycle | see COMPARISON.md |
+| Table 7 | cyclical behaviour of stocks (u, lfpr, E) | signs and magnitudes|
+| Table 8C | cyclical behaviour of the six gross flows | signs and magnitudes|
+| Table 9 | job-to-job rate over the cycle |  |
 | Table 11 | unemployment variance decomposition | qualitative only (see below) |
 
-`refs/` contains the authors' published model output (`Logfile.txt`,
-`stats_M.txt`), used as exact validation targets; `main.py` reports the
-deviations at the end of a run.
 
 ## What is taken as given
 
