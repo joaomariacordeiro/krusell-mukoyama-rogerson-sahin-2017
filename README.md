@@ -1,4 +1,4 @@
-# KMRS (2017) — A Python Replication of the Model
+# Krusell et.al. (2017) — A Python Replication of the Model
 
 An original Python implementation of the model in Krusell, Mukoyama, Rogerson
 & Şahin (2017), *"Gross Worker Flows over the Business Cycle"*, American
