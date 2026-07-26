@@ -18,7 +18,7 @@ Any errors are my own.
 ## Data and calibration availability
 
 | Data | Source | Availability |
-|---|---|---|
+|-----|-----|-----|
 | Model parameters (Table 4 of the paper) | Krusell et al. (2017) | Embedded in `parameters.py` |
 | Business-cycle shock process (ε^λ, ε^σ, ρ) | Krusell et al. (2017), Section II.B | Embedded in `parameters.py` |
 | Converged background-GE price constants | Authors' AER replication package | Embedded in `parameters.py` (used only by `--quick`) |
@@ -40,40 +40,16 @@ No external data are downloaded or required to run the model.
 | matplotlib | 3.10.7 | yes |
 
 ### Hardware
-| | |
-|---|---|
-| CPU | Intel Core 7 240H |
-| RAM | 31.5 GB |
-| OS | Microsoft Windows 11 |
+
+**CPU:** Intel Core 7 240H
+**RAM:** 31.5 GB
+**OS:** Microsoft Windows 11
 
 ### Expected Runtime
 
 Expect roughly 12 to 14 minutes.
-`main.py` reports only total runtime, not per-phase timings.
 
 ## Setup Instructions
-
-1. Download the repository folder.
-2. Install the dependencies:
-
-   ```
-   py -m pip install numpy scipy pandas matplotlib
-   ```
-
-3. Verify the installation:
-
-   ```
-   py -c "import numpy, scipy, pandas, matplotlib; print('ok')"
-   ```
-
-4. Run the replication:
-
-   ```
-   py main.py
-   ```
-
-   Adding `--quick` skips the price-calibration loop and solves at the
-   authors' converged prices; it produces the same exhibits.
 
 Repository layout:
 
@@ -112,7 +88,7 @@ Dependency graph (A ← B means B imports A):
 
 ```
 parameters ← discretize ← household ← cross_section ← equilibrium ─┐
-                                                     ← cycle ──────┼── main
+                                                    ← cycle ───────┼── main
                                           moments (standalone) ────┘
 ```
 
@@ -124,7 +100,7 @@ parameters ← discretize ← household ← cross_section ← equilibrium ─┐
 
 ## Output
 
-Key results, replication versus paper (replication numbers from the full run; paper values from Krusell et al. 2017, Tables 5, 7, 8C, 9 and 11):
+Key results, replication versus paper (replication numbers from the full run, and paper values from Krusell et al. 2017, Tables 5, 7, 8C, 9 and 11):
 
 | Exhibit | Replication | Paper |
 |---|---|---|
