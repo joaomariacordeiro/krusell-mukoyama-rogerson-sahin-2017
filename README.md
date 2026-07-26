@@ -1,4 +1,4 @@
-# Replicating Krusell, Mukoyama, Rogerson & Şahin (2017): > Gross Worker Flows over the Business Cycle
+# Replicating Krusell, Mukoyama, Rogerson & Şahin (2017): Gross Worker Flows over the Business Cycle
 
 ## Overview
 
@@ -45,6 +45,7 @@ No external data are downloaded or required to run the model.
 
 ### Hardware
 | | |
+|---|---|---|
 | CPU | Intel Core 7 240H |
 | RAM | 31.5 GB |
 | OS | Microsoft Windows 11 |
