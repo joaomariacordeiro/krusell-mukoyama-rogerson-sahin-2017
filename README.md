@@ -23,7 +23,7 @@ Any errors are my own.
 | Business-cycle shock process (ε^λ, ε^σ, ρ) | Krusell et al. (2017), Section II.B | Embedded in `parameters.py` |
 | Converged background-GE price constants | Authors' AER replication package | Embedded in `parameters.py` (used only by `--quick`) |
 | Authors' published model output (`Logfile.txt`, `stats_M.txt`) | Authors' AER replication package | Included in `refs/` as validation fixtures |
-| CPS/SIPP microdata and gross-flow construction | Krusell et al. (2017) | **Not replicated here**; data columns in the write-up are the published values |
+| CPS/SIPP microdata and gross-flow construction | Krusell et al. (2017) | (Not replicated here) data columns in the write-up are the published values |
 
 No external data are downloaded or required to run the model.
 
