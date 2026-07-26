@@ -2,13 +2,13 @@
 
 The model is partial equilibrium: households take the wage per efficiency
 unit ``w``, the interest rate ``r`` and the transfer ``T`` as given.  KMRS
-discipline the *levels* of these constants by requiring consistency with a
-background Cobb-Douglas economy: at the stationary distribution, ``K/L``
-implied by household wealth must equal the ``K/L`` behind the prices, the
-average-earnings reference in the UI cap must equal average earnings among
-the employed, and ``T`` must balance the government budget (taxes minus UI
-outlays).  This is a one-time calibration of constants -- a damped fixed
-point -- not a period-by-period market clearing.
+pin down the levels of these constants by requiring consistency with a
+background Cobb-Douglas economy.  At the stationary distribution, the
+capital-labour ratio implied by household wealth must equal the one behind
+the prices, the average-earnings reference in the UI cap must equal average
+earnings among the employed, and ``T`` must balance the government budget
+(taxes minus UI outlays).  This is a one-time calibration , found as a damped 
+fixed point, not by period-by-period market clearing.
 """
 
 from __future__ import annotations
@@ -31,7 +31,7 @@ class SteadyState:
     policies: Policies
     fine: FineSolution
     population: Population
-    flows: dict            #: average gross-flow rates and stocks (Table 5)
+    flows: dict            # average gross-flow rates and stocks (Table 5)
     aggregates: dict
     grids: Grids
     operator: Operator
@@ -65,7 +65,7 @@ def household_aggregates(pop: Population, grids: Grids, prices: Prices,
 
 def _solve_at(cal, num, grids, fr, prices, *, v_init=None, pop0=None,
               dist_tol=None, verbose=False):
-    """Household problem + invariant distribution at one price vector."""
+    """Household problem + invariant distribution at one price vector"""
     v, pol, n_vfi = solve_household(cal, num, grids, prices, fr,
                                     v_init=v_init, verbose=verbose)
     fine = refine(v, pol, grids)
@@ -73,7 +73,7 @@ def _solve_at(cal, num, grids, fr, prices, *, v_init=None, pop0=None,
     pop, n_dist = stationary(op, grids, num, pop0=pop0, tol=dist_tol,
                              verbose=verbose)
     if verbose:
-        print(f"    household solved in {n_vfi} sweeps; "
+        print(f"    household solved in {n_vfi} iterations; "
               f"distribution in {n_dist} iterations", flush=True)
     return v, pol, fine, op, pop
 
@@ -86,8 +86,8 @@ def solve_steady_state(cal: Calibration, num: Numerics, *,
     With ``prices`` supplied, solves once at those constants.  Otherwise runs
     the background-GE calibration: iterate on (K/L, average earnings, T) with
     damping until the household-implied values reproduce the assumed ones.
-    Successive iterations warm-start from the previous solution, which does
-    not affect the fixed point.
+    Iterations start from the previous solution, which does not affect the 
+    fixed point.
     """
     grids = build_grids(cal, num)
     fr = Frictions.steady(cal)
@@ -119,8 +119,7 @@ def solve_steady_state(cal: Calibration, num: Numerics, *,
                 break
         prices = Prices.from_kl(cal, kl, avgw, T)
 
-    # Final solve at the (calibrated or supplied) constants, tight tolerance;
-    # warm-started when the calibration loop ran (fixed point unaffected).
+    # Lastly, solve at the (calibrated or supplied) values
     v, pol, fine, op, pop = _solve_at(cal, num, grids, fr, prices,
                                       v_init=v_prev, pop0=pop_prev,
                                       verbose=verbose)
@@ -135,7 +134,7 @@ def solve_steady_state(cal: Calibration, num: Numerics, *,
 # Gross flows by wealth (Table 6)                                              #
 # --------------------------------------------------------------------------- #
 def wealth_quintile_bounds(pop: Population, grids: Grids) -> list[int]:
-    """Fine-grid indices splitting the population into wealth quintiles."""
+    """Fine-grid indices splitting the population into wealth quintiles"""
     cum = np.cumsum(pop.asset_marginal())
     cuts = [int(np.searchsorted(cum, c)) for c in (0.2, 0.4, 0.6, 0.8)]
     return [0] + cuts + [grids.a_fine.size]

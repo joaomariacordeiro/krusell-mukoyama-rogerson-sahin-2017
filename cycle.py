@@ -7,8 +7,8 @@ rate.  The wage per efficiency unit and the interest rate never move.
 
 Households solve a value-function system with the aggregate state as an extra
 state variable.  The economy is then simulated by propagating the full
-cross-sectional distribution along one realised shock path -- a deterministic
-simulation, not a Monte-Carlo panel.  Within a period, savings are chosen
+cross-sectional distribution along one realised shock path (a deterministic
+simulation, not a Monte-Carlo panel).  Within a period, savings are chosen
 under the current aggregate state, while the labour-market events and the
 resulting choices occur under next period's state (the household observes the
 new state before acting on the labour market, Section I.B timing).
@@ -37,7 +37,7 @@ from parameters import BusinessCycle, Calibration, Frictions, Numerics
 # Aggregate states                                                             #
 # --------------------------------------------------------------------------- #
 def state_frictions(cal: Calibration, bc: BusinessCycle) -> list[Frictions]:
-    """Frictions in the bad (0) and good (1) aggregate state (Section II.B)."""
+    """Frictions in the bad (0) and good (1) aggregate state (Section II.B)"""
     out = []
     for sgn in (-1.0, +1.0):
         lu = cal.lambda_u + sgn * bc.eps_lambda
@@ -53,7 +53,7 @@ def state_frictions(cal: Calibration, bc: BusinessCycle) -> list[Frictions]:
 
 
 def transition_matrix(bc: BusinessCycle) -> NDArray:
-    """Symmetric two-state chain with persistence rho on the diagonal."""
+    """Symmetric two-state chain with persistence rho on the diagonal"""
     return np.array([[bc.rho, 1.0 - bc.rho],
                      [1.0 - bc.rho, bc.rho]])
 
@@ -153,12 +153,12 @@ def solve_cycle(cal: Calibration, num: Numerics, grids: Grids, prices: Prices,
                     for s in range(n_states) for f in ("W", "UE", "UN", "OE", "ON"))
         v, pol = new_v, new_pol
         if verbose and it % 10 == 0:
-            print(f"    cycle VFI sweep {it:4d}  d_value={err_v:.2e}  "
+            print(f"    cycle VFI iteration {it:4d}  d_value={err_v:.2e}  "
                   f"d_policy={err_p:.2e}", flush=True)
         if err_v < num.tol_value and err_p < num.tol_value:
             break
     if verbose:
-        print(f"    cycle value functions solved in {it} sweeps", flush=True)
+        print(f"    cycle value functions solved in {it} iterations", flush=True)
 
     fine = [refine(v[s], pol[s], grids) for s in range(n_states)]
     return CycleSolution(values=v, policies=pol, fine=fine)
@@ -175,7 +175,7 @@ def simulate(sol: CycleSolution, cal: Calibration, num: Numerics, grids: Grids,
     Returns monthly series: stocks, the six gross-flow rates, the job-to-job
     rate, efficiency units and output.  The operator for month ``t`` uses the
     savings policy of state ``s_t`` and the events/choices of state
-    ``s_{t+1}``; flows and stocks are recorded at the start of the month.
+    ``s_{t+1}``. Flows and stocks are recorded at the start of the month.
     """
     frs = state_frictions(cal, bc)
     path = shock_path(bc)

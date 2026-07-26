@@ -1,7 +1,8 @@
-"""Cross-sectional dynamics: the law of motion of the population distribution.
+"""Cross-sectional dynamics: how the population distribution evolves over time.
 
-The population is described by mass functions over (assets, productivity) for
-each labour-market state, on a fine, evenly spaced asset grid:
+The population is described by the mass of households at each combination of
+assets and productivity, separately for each labour-market state, on a fine
+and evenly spaced asset grid:
 
     W (a, z, q)   employed at match quality q
     UE(a, z)      active search, UI-eligible
@@ -9,34 +10,40 @@ each labour-market state, on a fine, evenly spaced asset grid:
     OE(a, z)      passive, UI-eligible
     ON(a, z)      passive, not eligible
 
-The search cost gamma is drawn i.i.d. every period *at the moment the
-labour-market choice is made*, so last period's draw carries no information:
-non-employed masses need only (a, z).  [The choice-time gamma' draw is
-integrated out inside the routing coefficients below.]
+The search cost gamma is drawn every period at the moment the
+labour-market choice is made, so last period's draw carries no information
+about this period's.  The non-employed masses therefore need only (a, z).
+The new gamma draw is averaged out inside the choice coeficients below.
 
-One period of the law of motion has three layers (Section I.B timing):
+Advancing the distribution by one period follows the timing of the model
+(Section I.B of the paper) in three stages:
 
-1.  **Savings and productivity.**  Each mass point moves to its chosen a'
-    (split linearly between the two bracketing fine-grid nodes) and z evolves
-    by the Tauchen chain.
-2.  **Events.**  Nature splits each state's mass into mutually exclusive
-    event channels: for the employed, {keep job, keep + outside offer,
-    separation + fresh offer, separation without offer} with probabilities
-    (1-sigma-lambda_e, lambda_e, sigma*lambda_s, sigma*(1-lambda_s)); for the
-    non-employed, {offer, no offer} at the state's arrival rate, crossed with
-    UI-eligibility expiry at rate mu for the eligible.
-3.  **Choices.**  Within each channel the individual makes the discrete
-    choice (work / search actively / stay out) by comparing the relevant
-    value functions under a fresh gamma' (and the drawn q' where an offer
-    arrived).  A separated worker chooses under *eligible* values; one who
-    would quit a surviving job is *not* eligible (quits forfeit UI,
-    Section I.C).
+1.  Assets and productivity:  each household's mass moves to its chosen
+    savings level (split between the two neighbouring grid points, so that
+    average assets are preserved) and its productivity z evolves according
+    to the Tauchen transition matrix.
+    
+2.  Events:  chance then divides each household's mass across the possible
+    events of the period.  An employed household keeps its job, keeps it and
+    receives an outside offer, separates and immediately draws a new offer,
+    or separates with no offer, with probabilities (1-sigma-lambda_e,
+    lambda_e, sigma*lambda_s, sigma*(1-lambda_s)).  A non-employed household
+    receives an offer or not, at the arrival rate of its state, and UI
+    eligibility expires with probability mu for the eligible.  Each possible
+    outcome is a branch of the period.
+    
+3.  Choices:  within each branch the household picks the best of working,
+    searching actively, or staying out, comparing the relevant value
+    functions under a fresh gamma draw (and the drawn match quality q' where
+    an offer arrived).  A separated worker chooses among UI-eligible values.
+    One who quits a surviving job does not, because quitting forfeits UI
+    (Section I.C).
 
-Because the value functions are fixed while the distribution evolves, the
-choice indicators in layer 3 are constant.  They are therefore pre-computed
-once, integrated against the (q', gamma') weights, into small coefficient
-arrays ("routing tables"); each period of the law of motion is then a handful
-of array contractions.  Gross flows are accumulated in the same pass.
+Because the value functions stay fixed while the distribution evolves, the
+stage-3 choices never change.  They are therefore computed once, averaged
+over the possible gamma and q' draws, and stored as small coefficient arrays.
+Advancing the distribution one period then reduces to a few array
+multiplications.  Gross flows are counted in the same pass.
 """
 
 from __future__ import annotations
@@ -58,7 +65,7 @@ _FLOW_KEYS = ("EE", "JJ", "EU", "EN", "UE", "UU", "UN", "NE", "NU", "NN")
 # --------------------------------------------------------------------------- #
 @dataclass
 class Population:
-    """Mass by labour-market state on the fine asset grid (sums to one)."""
+    """Mass by labour-market state on the fine asset grid (sums to one)"""
 
     W: NDArray    # (A, Z, Q)
     UE: NDArray   # (A, Z)
@@ -82,12 +89,12 @@ class Population:
         return self.employed + self.unemployed + self.out_of_lf
 
     def asset_marginal(self) -> NDArray:
-        """Total mass at each fine asset node (for wealth quantiles)."""
+        """Total mass at each fine asset node (for the wealth quantiles)."""
         return (self.W.sum(axis=(1, 2)) + self.UE.sum(axis=1) + self.UN.sum(axis=1)
                 + self.OE.sum(axis=1) + self.ON.sum(axis=1))
 
     def restrict_assets(self, lo: int, hi: int) -> "Population":
-        """Sub-population with fine-grid asset index in [lo, hi)."""
+        """Sub-population with fine-grid asset index in [lo, hi)"""
         m = np.zeros(self.W.shape[0])
         m[lo:hi] = 1.0
         return Population(self.W * m[:, None, None], self.UE * m[:, None],
@@ -153,10 +160,10 @@ def refine(v: Values, pol: Policies, grids: Grids) -> FineSolution:
 
 
 # --------------------------------------------------------------------------- #
-# Routing tables (layer 3: discrete choices, pre-integrated over q', gamma')  #
+# Stage-3 choice coeficients (averaged over the q' and gamma draws)           #
 # --------------------------------------------------------------------------- #
-# All comparisons are strict: employment requires W > max(U, O), active search
-# requires U > O; ties resolve to the more passive state.
+# All comparisons are strict: taking a job requires W > max(U, O), and active
+# search requires U > O.  A tie therefore resolves to the more passive state.
 
 @dataclass
 class OfferRouting:
@@ -260,13 +267,13 @@ def _ladder_routing(Wf, Uf, Of, w_q, w_g, q_levels) -> LadderRouting:
 # --------------------------------------------------------------------------- #
 @dataclass
 class Operator:
-    """Pre-assembled law of motion for one period.
+    """Everything needed to advance the distribution by one period.
 
-    Savings lotteries come from the *decision-time* solution; routing tables
-    and frictions from the *choice-time* solution.  In the steady state these
-    coincide; over the business cycle the savings policy belongs to the
-    current aggregate state while events and choices occur under next
-    period's state (Section II.B timing).
+    The savings moves come from one solution and the event/choice
+    coefficients from another.  In the steady state the two coincide.  Over
+    the business cycle the savings policy belongs to the current aggregate
+    state, while the events and choices occur under next period's state,
+    matching the timing of the model (Section II.B).
     """
 
     idx: dict         #: bracketing fine-grid index of each savings choice
@@ -283,7 +290,12 @@ class Operator:
 
 def build_operator(save: FineSolution, choose: FineSolution, fr: Frictions,
                    grids: Grids) -> Operator:
-    """Assemble the operator from a saving solution and a choice solution."""
+    """Assemble the one-period operator.
+
+    ``save`` supplies the savings policies (where mass moves), ``choose`` the
+    value functions that decide the labour-market choices.  Pass the same
+    solution twice for the steady state.
+    """
     af, w_q, w_g = grids.a_fine, grids.w_q, grids.w_gamma
     idx, frac = {}, {}
     for name, pol in (("W", save.aW), ("UE", save.aUE), ("UN", save.aUN),
@@ -304,7 +316,9 @@ def build_operator(save: FineSolution, choose: FineSolution, fr: Frictions,
 
 
 def _push(mass: NDArray, idx: NDArray, frac_hi: NDArray, Pi_z: NDArray) -> NDArray:
-    """Layer 1: apply the savings lottery, then the z-transition."""
+    """Stage 1: move each mass point to its chosen savings level, splitting it
+    between the two neighbouring grid points, then let z evolve by the
+    Tauchen transition matrix."""
     A = mass.shape[0]
     rest = int(np.prod(mass.shape[1:]))
     m = mass.reshape(A, rest)
@@ -324,7 +338,7 @@ def _push(mass: NDArray, idx: NDArray, frac_hi: NDArray, Pi_z: NDArray) -> NDArr
 
 def step(pop: Population, op: Operator, *, count_flows: bool = False,
          renormalize: bool = True):
-    """Advance the population one period; optionally account gross flows.
+    """Advance the population one period
 
     Returns ``(next_population, flows)``; ``flows`` is None unless requested,
     otherwise a dict of transition *rates* (each destination mass divided by
@@ -337,7 +351,7 @@ def step(pop: Population, op: Operator, *, count_flows: bool = False,
     lu, ln, le, ls, sig, mu = (fr.lambda_u, fr.lambda_n, fr.lambda_e,
                                fr.lambda_s, fr.sigma, fr.mu)
 
-    # Layer 1: savings lottery + z transition, per source state.
+    # Stage 1: savings and productivity transition, one array per labour state.
     pW = _push(pop.W, op.idx["W"], op.frac_hi["W"], op.Pi_z)      # (A,Z,Q)
     pUE = _push(pop.UE, op.idx["UE"], op.frac_hi["UE"], op.Pi_z)  # (A,Z)
     pUN = _push(pop.UN, op.idx["UN"], op.frac_hi["UN"], op.Pi_z)
@@ -354,7 +368,7 @@ def step(pop: Population, op: Operator, *, count_flows: bool = False,
     gain_total = 0.0
 
     def route_offer(mass, rt: OfferRouting, dU, dO, kE, kU, kO):
-        """Offer-in-hand channel: mass (A,Z) -> employment / search / out."""
+        """Offer-in-hand channel: mass (A,Z) -> employment / search / out"""
         nonlocal nW
         nW += mass[:, :, None] * rt.to_E
         dU += mass * rt.to_U
@@ -372,8 +386,8 @@ def step(pop: Population, op: Operator, *, count_flows: bool = False,
             fl[kO] += float((mass * rt.to_O).sum())
 
     # --- Employed: four mutually exclusive events (Section I.B) ----------- #
-    # Survivors decide under NON-eligible values (quitting forfeits UI);
-    # the separated decide under ELIGIBLE values.
+    # Survivors decide under non-eligible values (quitting forfeits UI).
+    # The separated decide under eligeble values.
     m = (1.0 - sig - le) * pW                       # keep job, no outside offer
     kn = op.keep_n
     nW += m * kn.stay
@@ -436,7 +450,7 @@ def step(pop: Population, op: Operator, *, count_flows: bool = False,
 def stationary(op: Operator, grids: Grids, num: Numerics, *,
                pop0: Population | None = None, tol: float | None = None,
                verbose: bool = False) -> tuple[Population, int]:
-    """Iterate the operator to its fixed point (the invariant distribution)."""
+    """Iterate the operator to its fixed point (the invariant distribution)"""
     tol = num.tol_dist if tol is None else tol
     pop = pop0 if pop0 is not None else uniform_seed(grids)
     it = 0

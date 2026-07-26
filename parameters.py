@@ -13,7 +13,7 @@ from dataclasses import dataclass
 
 @dataclass(frozen=True)
 class Calibration:
-    """Economic parameters (Table 4; Section II.A)."""
+    """Economic parameters (Table 4; Section II.A)"""
 
     # --- Preferences (Section I.A) --------------------------------------- #
     beta: float = 0.99465        #: discount factor; consistent with 1+r = 1.00327
@@ -104,12 +104,12 @@ class BusinessCycle:
     rho: float = 0.983           #: diagonal of the symmetric transition matrix
     n_months: int = 5000         #: simulated months
     burn_in: int = 1000          #: months discarded before computing statistics
-    seed: int = 1                #: RNG seed for the aggregate shock path
+    seed: int = 1                #: seed for the aggregate shock path
 
 
 @dataclass(frozen=True)
 class Numerics:
-    """Grid sizes, tolerances and iteration limits."""
+    """Grid sizes, tolerances and iteration limits"""
 
     n_a: int = 48            #: asset nodes for the household problem (log-spaced)
     n_a_fine: int = 1000     #: asset nodes for the distribution (evenly spaced)
@@ -126,7 +126,7 @@ class Numerics:
     max_value_iter: int = 2000
     max_dist_iter: int = 10000
     max_price_iter: int = 100
-    howard_steps: int = 30     #: policy-evaluation sweeps per optimisation sweep
+    howard_steps: int = 30     #: fixed-policy value updates per optimisation pass
 
     # Damping and tolerances of the background-GE price calibration
     # (Section II.A): K/L updates slowly, earnings and transfers faster.

@@ -1,4 +1,4 @@
-"""Reproduce the model results of Krusell, Mukoyama, Rogerson and Sahin (2017).
+"""Reproduce Krusell, Mukoyama, Rogerson and Sahin (2017).
 
 Pipeline:
     1. steady state, with the constant prices calibrated to the background
@@ -11,8 +11,8 @@ Pipeline:
        results written to ``outputs/`` and ``figures/``.
 
 Run:  python main.py            full run (price calibration; ~15-30 min)
-      python main.py --quick    skip the price loop, use the converged
-                                constants (identical results, faster)
+      python main.py --quick    solve at the authors' converged price (skips the calibration loop)
+                                
 """
 
 from __future__ import annotations
@@ -49,10 +49,11 @@ PAPER_TABLE11 = (74.1, 31.1, -3.8)
 
 
 # --------------------------------------------------------------------------- #
-# Reference-output parsers (authors' shipped files)                            #
+# Reference-output values (authors' files)                                   #
 # --------------------------------------------------------------------------- #
 def parse_logfile(path: str) -> dict:
-    """Steady-state flows etc. from the published log (last occurrence wins)."""
+    """Steady-state flows etc. from the published log.
+       last occurrence prevails (converged)."""
     text = open(path).read()
 
     def last(label: str):
@@ -92,9 +93,8 @@ def banner(msg: str) -> None:
 # --------------------------------------------------------------------------- #
 def make_flow_figure(stats: dict, path: str = "figures/flows_combined.pdf") -> None:
     """Bar-chart comparison of the six flow moments with the paper (Table 8C):
-    cyclicality (top panel) and volatility (bottom panel)."""
-    import matplotlib
-    matplotlib.use("Agg")
+    cyclicality (top panel) and volatility (bottom panel).  The figure is saved
+    to ``path``. """
     import matplotlib.pyplot as plt
 
     plt.rcParams.update({
@@ -102,8 +102,8 @@ def make_flow_figure(stats: dict, path: str = "figures/flows_combined.pdf") -> N
         "font.serif": ["Palatino Linotype", "TeX Gyre Pagella", "Palatino",
                        "URW Palladio L", "P052", "DejaVu Serif"],
         "mathtext.fontset": "dejavuserif",
-        "font.size": 12, "axes.titlesize": 12, "axes.labelsize": 11,
-        "legend.fontsize": 10, "xtick.labelsize": 10, "ytick.labelsize": 10,
+        "font.size": 18, "axes.titlesize": 16, "axes.labelsize": 14,
+        "legend.fontsize": 14, "xtick.labelsize": 12, "ytick.labelsize": 12,
         "figure.dpi": 110, "savefig.bbox": "tight",
     })
 
@@ -115,23 +115,24 @@ def make_flow_figure(stats: dict, path: str = "figures/flows_combined.pdf") -> N
     for ax, (kind, key, col, ylab) in zip(axes, panels):
         model = [stats[key.format(f)] for f in flows]
         paper = [PAPER_TABLE8C[f][col] for f in flows]
-        ax.bar(x - 0.2, model, 0.4, label="model (ours)")
-        ax.bar(x + 0.2, paper, 0.4, label="paper (Table 8C)")
+        ax.bar(x - 0.2, model, 0.4, label="Replication")
+        ax.bar(x + 0.2, paper, 0.4, label="Paper (Table 8C)")
         ax.set_xticks(x)
         ax.set_xticklabels([f.upper()[1:] for f in flows])
         ax.axhline(0, color="grey", lw=.5)
         ax.set_ylabel(ylab)
-        ax.legend()
-        ax.set_title(f"Gross-flow {kind}: model vs paper")
+        ax.set_title(f"Gross-flow {kind}: replication vs paper")
+    handles, labels = axes[0].get_legend_handles_labels()
+    fig.legend(handles, labels, loc="lower center", ncol=2, frameon=False,
+               bbox_to_anchor=(0.5, 0.0))
     os.makedirs(os.path.dirname(path), exist_ok=True)
-    fig.tight_layout()
+    fig.tight_layout(rect=[0, 0.05, 1, 1])
     fig.savefig(path)
-    plt.close(fig)
     print(f"  figure written to {path}", flush=True)
 
 
 # --------------------------------------------------------------------------- #
-# Run                                                                          #
+# Run                                                                         #
 # --------------------------------------------------------------------------- #
 def main() -> None:
     ap = argparse.ArgumentParser()

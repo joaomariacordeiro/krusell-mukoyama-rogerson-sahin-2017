@@ -1,95 +1,228 @@
-# Krusell et.al. (2017) — A Python Replication of the Model
+# Replicating Krusell, Mukoyama, Rogerson & Şahin (2017): Gross Worker Flows over the Business Cycle
 
-An original Python implementation of the model in Krusell, Mukoyama, Rogerson
-& Şahin (2017), *"Gross Worker Flows over the Business Cycle"*, American
-Economic Review 107(11): 3447–3476 — written from the paper's equations, based on 
-the official replication package, wherever the text is silent.
+## Overview
 
-**Scope: model only.** The empirical work (CPS/SIPP gross-flow construction,
-measurement-error corrections, seasonal adjustment) is not reproduced.
-Calibrated parameter values and targets are taken from the paper (Table 4);
-the data columns of its tables are the published values.
+This repository contains an independent Python replication of the model in:
 
-## What is reproduced
+> Krusell, P., Mukoyama, T., Rogerson, R. and Şahin, A. (2017). "Gross Worker
+> Flows over the Business Cycle". *American Economic Review*, 107(11),
+> 3447–3476.
 
-| Exhibit | Object | Status |
+The replication was produced for the course **Macroeconomics with Micro Data**
+(2nd-year PhD, Goethe University Frankfurt).
+
+**Scope.** This replicates the **model only**. The empirical work of the
+original paper (CPS gross-flow construction, Abowd–Zellner and deNUNification
+corrections, seasonal adjustment, SIPP processing) is **not** replicated.
+Calibration targets and parameter values are taken from the paper rather than
+recomputed from microdata.
+
+| | |
+|---|---|
+| Author | João Maria Cordeiro |
+| Date | July 2026 |
+| Contact | joaomariacordeiro@gmail.com |
+
+## Disclaimer
+
+Any errors are my own.
+
+## Data and calibration availability
+
+| Data | Source | Availability |
 |---|---|---|
-| Table 5 | average gross-flow matrix, steady state | matches published model output to ~3e-6 |
-| Table 6 | flow rates by wealth quintile | matches to ~1e-5 |
-| Table 7 | cyclical behaviour of stocks (u, lfpr, E) | signs and magnitudes|
-| Table 8C | cyclical behaviour of the six gross flows | signs and magnitudes|
-| Table 9 | job-to-job rate over the cycle |  |
-| Table 11 | unemployment variance decomposition | qualitative only (see below) |
+| Model parameters (Table 4 of the paper) | Krusell et al. (2017) | Embedded in `parameters.py` |
+| Business-cycle shock process (ε^λ, ε^σ, ρ) | Krusell et al. (2017), Section II.B | Embedded in `parameters.py` |
+| Converged background-GE price constants | Authors' AER replication package | Embedded in `parameters.py` (used only by `--quick`) |
+| Authors' published model output (`Logfile.txt`, `stats_M.txt`) | Authors' AER replication package | Included in `refs/` as validation fixtures |
+| CPS/SIPP microdata and gross-flow construction | Krusell et al. (2017) | **Not replicated here**; data columns in the write-up are the published values |
+
+No external data are downloaded or required to run the model.
+
+## Computational Requirements
+
+### Software
+
+| Software | Tested version | Required |
+|---|---|---|
+| Python | 3.13.5 | ≥ 3.11 |
+| numpy | 2.3.2 | yes |
+| scipy | 1.17.1 | yes |
+| pandas | 2.3.1 | yes |
+| matplotlib | 3.10.7 | yes |
 
 
-## What is taken as given
+### Hardware
 
-- **Parameters** — Table 4 of the paper. One documented exception: Table 4
-  prints λ_u = 0.278, but the official calibration behind the published model
-  results uses **0.282** (the tied rates λ_e = 0.428·λ_u, λ_n = 0.645·λ_u
-  follow it); this implementation uses 0.282.
-- **Prices** — the model is partial equilibrium; the constants (w, r, T) are
-  calibrated once to a background Cobb–Douglas general equilibrium
-  (Section II.A) and never move over the cycle. `--quick` skips this
-  calibration loop and uses the converged constants directly.
-- **Business-cycle shocks** — the two-state friction process of Section II.B
-  (ε_λ = 0.0662, ε_σ = 0.00239, ρ = 0.983), simulated for 5,000 months from
-  seed 1 with a 1,000-month burn-in.
+| | |
+|---|---|
+| CPU | Intel Core 7 240H |
+| RAM | 31.5 GB |
+| OS | Microsoft Windows 11 |
 
-## Known limitations (documented, not hidden)
+### Expected Runtime
 
-- **Business-cycle volatilities** run ~5% above the published model values.
-  The published output was produced with a different random-number generator
-  for the aggregate shock path (same seed, different algorithm), so the two
-  simulations average over different 4,000-month samples. Correlations and
-  autocorrelations — far less sensitive to the particular path — match to
-  ~0.01–0.03.
-- **Average J2J wage gain**: 0.0320 here versus 0.0329 in the published log.
-  The original's accounting of the separation-with-immediate-rehire channel
-  reads an out-of-scope array index, contaminating the shipped figure; this
-  implementation counts wage gains on on-the-job ladder moves only. Both are
-  near the 0.033 calibration target.
-- **Table 11** is computed with a counterfactual-covariance decomposition of
-  the flow-implied steady-state unemployment rate. It reproduces the paper's
-  qualitative finding (flows involving U dominate; the E&N contribution is
-  negligible) but not the published U&E / U&N split, which is produced with
-  a different implementation of the Elsby–Hobijn–Şahin (2015) method that is
-  external to the shipped model code.
+Expect roughly 12 to 14 minutes.
+`main.py` reports only total runtime, not per-phase timings.
 
-## How to run
+## Setup Instructions
 
-```bash
-pip install -r requirements.txt   # numpy, scipy, pandas (pinned)
-python main.py                    # full run: price calibration + cycle
-python main.py --quick            # same results; skips the price loop
+1. Dowanload the repository folder.
+2. Install the pinned dependencies:
+
+   ```
+   py -m pip install -r requirements.txt
+   ```
+
+3. Verify the installation:
+
+   ```
+   py -c "import numpy, scipy, pandas, matplotlib; print('ok')"
+   ```
+
+4. Run the replication (see Results below).
+
+Repository layout:
+
+```
+Replication/
+├── main.py                          driver: run, compare, validate, save
+├── parameters.py                    calibration, frictions, shocks, numerics
+├── discretize.py                    grids and finite-state approximations
+├── household.py                     household problem (VFI)
+├── cross_section.py                 population distribution dynamics
+├── equilibrium.py                   steady state and price calibration
+├── cycle.py                         business-cycle solution and simulation
+├── moments.py                       HP filter, cyclical statistics
+├── refs/
+│   ├── Logfile.txt                  authors' published steady-state output
+│   └── stats_M.txt                  authors' published business-cycle output
+├── outputs/                         generated: tables (CSV), monthly series
+├── figures/                         generated: flows_combined.pdf
+├── requirements.txt                 pinned dependencies
+└── README.md                        this file
+
+
+
+## Code Structure
+
+| File | Description | Key functions |
+|---|---|---|
+| `parameters.py` | All calibrated parameters (Table 4), friction bundle, shock process, numerical settings | `Calibration`, `Frictions`, `BusinessCycle`, `Numerics` |
+| `discretize.py` | Asset grids; Tauchen chain for z; bins for match quality; monthly conversion of the annual wage process | `build_grids`, `tauchen_matrix`, `monthly_innovation_sd` |
+| `household.py` | The five-value-function household problem, solved by VFI with golden-section savings and Howard acceleration | `solve_household`, `continuation_values`, `maximize_savings`, `Prices` |
+| `cross_section.py` | Population distribution and its one-period law of motion; gross-flow accounting | `build_operator`, `step`, `stationary`, `Population` |
+| `equilibrium.py` | Steady state at given prices; damped background-GE price calibration; flows by wealth quintile | `solve_steady_state`, `household_aggregates`, `flows_by_wealth` |
+| `cycle.py` | Value functions over the two aggregate states; shock path; deterministic simulation | `solve_cycle`, `simulate`, `shock_path`, `state_frictions` |
+| `moments.py` | Quarterly aggregation, HP(1600) filter, cyclical moments, variance decomposition | `cycle_statistics`, `variance_decomposition`, `hp_trend` |
+| `main.py` | Orchestrates the pipeline, prints comparisons with the paper, validates against `refs/`, writes outputs | `main`, `make_flow_figure`, `parse_logfile` |
+
+Dependency graph (A ← B means B imports A):
+
+```
+parameters ← discretize ← household ← cross_section ← equilibrium ─┐
+                                                     ← cycle ──────┼── main
+                                          moments (standalone) ────┘
 ```
 
-(Windows: `py main.py`.) The run prints every table against the paper's model
-column, validates against `refs/`, writes CSVs to `outputs/`, and produces the
-gross-flow comparison figure in `figures/`. The simulation seed is fixed
-(seed 1, first period in the good state), so runs are reproducible. Full run
-≈ 12–15 minutes on a laptop.
+`parameters.py` and `moments.py` are standalone (no internal imports;
+`moments.py` uses only numpy/scipy). `discretize.py` imports `parameters`;
+`household.py` imports both; `cross_section.py` builds on `household`;
+`equilibrium.py` and `cycle.py` build on all of the above; `main.py` imports
+`equilibrium`, `cycle`, `moments`, `household` and `parameters`.
 
-## Code map
 
-| Module | Contents | Paper |
+  ```
+
+## Output
+
+Key results, replication versus paper (replication numbers from the full run;
+paper values from Krusell et al. 2017, Tables 5, 7, 8C, 9 and 11):
+
+| Exhibit | Replication | Paper |
 |---|---|---|
-| `parameters.py` | calibration, frictions, shock process, numerics | Table 4, §II |
-| `discretize.py` | Tauchen chain, i.i.d. bins, annual→monthly conversion, grids | §I.A, §II.A |
-| `household.py` | budgets, UI, Bellman expectation, savings choice, VFI | §I.B–I.C |
-| `cross_section.py` | population law of motion, routing tables, gross-flow accounting | §I.B, §I.D |
-| `equilibrium.py` | steady state, background-GE price calibration, Table 6 | §II.A |
-| `cycle.py` | two-state aggregate shock, cycle value functions, simulation | §II.B, §III |
-| `moments.py` | quarterly aggregation, HP(1600), moments, variance decomposition | §III.A, §III.D |
-| `main.py` | driver: run, compare, validate, save | — |
+| Unemployment rate (steady state) | 0.0678 | 0.068 |
+| Participation rate (steady state) | 0.662 | 0.66 |
+| E→U flow rate | 0.0142 | 0.014 |
+| U→E flow rate | 0.2187 | 0.219 |
+| U→N flow rate | 0.1296 | 0.130 |
+| N→E flow rate | 0.0221 | 0.022 |
+| Average job-to-job wage gain | 0.0320 | 0.033 (target) |
+| std(u), HP-filtered | 0.128 | 0.121 |
+| corr(lfpr, Y) | 0.393 | 0.37 |
+| corr(f_EU, Y) | −0.794 | −0.79 |
+| corr(f_UN, Y) | 0.478 | 0.47 |
+| corr(f_NU, Y) | −0.962 | −0.96 |
+| Job-to-job rate: std, corr(·,Y) | 0.103, 0.554 | 0.098, 0.54 |
+| Variance decomposition (U&E / U&N / E&N) | 84.9 / 13.2 / 1.6 | 74.1 / 31.1 / −3.8 |
 
+The business-cycle standard deviations sit uniformly about 5% above the
+paper's, and the variance decomposition is reproduced only qualitatively (see
+Methodological Notes below).
 
-## Requirements
+Figures:
 
-Python ≥ 3.11 with `numpy`, `scipy`, `pandas`, `matplotlib` (pinned versions
-in `requirements.txt`; tested with Python 3.13.5). No other dependencies.
+| File | Description | Paper reference |
+|---|---|---|
+| `figures/flows_combined.pdf` | Gross-flow cyclicality (top) and volatility (bottom), replication vs paper | Table 8, panel C |
 
-## Reference
+## Methodological Notes
 
-Krusell, P., Mukoyama, T., Rogerson, R. and Şahin, A. (2017). *Gross Worker
-Flows over the Business Cycle.* American Economic Review, 107(11): 3447–3476.
+### Departures from the original
+
+| Component | This replication | Krusell et al. (2017) |
+|---|---|---|
+| Language | Python (numpy/scipy) | Fortran + MATLAB statistics |
+| Household problem | VFI, golden-section savings, Howard acceleration | VFI, golden-section savings |
+| Search-cost state | analytic: savings policies are γ-free, U(a,z,γ)=Û(a,z)−γ | explicit γ dimension |
+| Distribution | Young (2010) operator with pre-computed choice coefficients | Young (2010), explicit loops |
+| Shock discretisation | Tauchen n_z=20, n_q=7, n_γ=3 | identical |
+| Asset grids | 48 (log-spaced) solve / 1000 (linear) distribution | identical |
+| Price calibration | damped fixed point on K/L, average earnings, T | identical procedure |
+| Business-cycle simulation | deterministic distribution along one shock path | identical |
+| Shock-path random numbers | numpy PCG64, seed 1 | IMSL generator, seed 1 |
+| Statistics | in-house HP(1600), quarterly aggregation | `hpfilter.m`, quarterly |
+
+The Howard acceleration and the two search-cost simplifications change
+iteration counts, not the fixed point; at the authors' converged prices the
+ten steady-state flows match their published output to ~1e-6 (`--quick`
+mode; ~1e-5 when the replication calibrates its own prices).
+
+### Discrepancies
+
+1. **Business-cycle volatilities ~5% high.** The aggregate shock path is
+   drawn with a different random-number generator (same seed, different
+   algorithm), so the two simulations average different 5,000-month samples.
+   Correlations and autocorrelations, which depend far less on the particular
+   path, match to ~0.02, and the gap is uniform across series.
+2. **Variance decomposition (Table 11): 84.9/13.2/1.6 vs 74.1/31.1/−3.8.**
+   The exact Elsby–Hobijn–Şahin implementation used by the authors lives in
+   an external spreadsheet, not in their model code; the counterfactual-
+   covariance method used here reproduces the qualitative structure (flows
+   involving U dominate jointly, E&N negligible) but splits U&E vs U&N
+   differently.
+4. **λ_u = 0.282 vs 0.278 printed in the paper's Table 4.** The authors'
+   calibration (and their derived λ_e = 0.428·λ_u, λ_n = 0.645·λ_u) uses
+   0.282; this replication follows the calibration, and notes the
+   discrepancy in the write-up.
+
+## References
+
+- Elsby, M. W. L., Hobijn, B. and Şahin, A. (2015). "On the Importance of the
+  Participation Margin for Labor Market Fluctuations". *Journal of Monetary
+  Economics*, 72, 64–82.
+- Goensch, J. (2025). "Lecture 1: Dynamic Programming: Certainty".
+  Quantitative Macroeconomics and Numerical Methods, Goethe University
+  Frankfurt.
+- Krusell, P., Mukoyama, T., Rogerson, R. and Şahin, A. (2017). "Gross Worker
+  Flows over the Business Cycle". *American Economic Review*, 107(11),
+  3447–3476.
+- Tauchen, G. (1986). "Finite State Markov-Chain Approximations to Univariate
+  and Vector Autoregressions". *Economics Letters*, 20(2), 177–181.
+- Young, E. R. (2010). "Solving the Incomplete Markets Model with Aggregate
+  Uncertainty Using the Krusell–Smith Algorithm and Non-Stochastic
+  Simulations". *Journal of Economic Dynamics and Control*, 34(1), 36–41.
+
+## Licence
+
+MIT. See the `LICENSE` file.

@@ -1,4 +1,4 @@
-"""Discretisation of the model's state space.
+"""Discretisation of the model's state space
 
 Builds the asset grids and finite-state approximations to the three
 idiosyncratic shocks of Section I.A:
@@ -27,7 +27,7 @@ from parameters import Calibration, Numerics
 # Annual -> monthly conversion of the productivity process (Section II.A)      #
 # --------------------------------------------------------------------------- #
 def monthly_persistence(rho_annual: float) -> float:
-    """Monthly AR(1) persistence consistent with the annual estimate."""
+    """Monthly AR(1) persistence consistent with the annual estimate """
     return rho_annual ** (1.0 / 12.0)
 
 
@@ -68,7 +68,7 @@ def tauchen_matrix(grid: NDArray, rho: float, sigma: float) -> NDArray:
 
 
 def normal_bin_weights(grid: NDArray, sigma: float) -> NDArray:
-    """Probabilities of a mean-zero normal over midpoint bins of ``grid``."""
+    """Probabilities of a mean-zero normal over midpoint bins of ``grid``"""
     h = grid[1] - grid[0]
     upper = ndtr((grid + 0.5 * h) / sigma)
     lower = ndtr((grid - 0.5 * h) / sigma)
@@ -79,11 +79,11 @@ def normal_bin_weights(grid: NDArray, sigma: float) -> NDArray:
 
 
 # --------------------------------------------------------------------------- #
-# Grid bundle                                                                  #
+# Grids                                                                       #
 # --------------------------------------------------------------------------- #
 @dataclass(frozen=True)
 class Grids:
-    """All discretised state objects, built once and passed around."""
+    """All discretised state objects, built once and passed around"""
 
     a: NDArray          #: asset grid for the household problem (log-spaced)
     a_fine: NDArray     #: asset grid for the distribution (evenly spaced)
@@ -101,8 +101,9 @@ def build_grids(cal: Calibration, num: Numerics) -> Grids:
     """Construct the full grid bundle from the calibration."""
     # Assets: the household problem uses a grid evenly spaced in log(a + 2),
     # concentrating nodes near the borrowing constraint a = 0 where the value
-    # function has the most curvature; the distribution lives on an evenly
-    # spaced grid so that the savings lottery is a simple two-node split.
+    # function has the most curvature. The distribution lives on an evenly
+    # spaced grid, so splitting a mass point between the two grid points that
+    # bracket its savings choice is a constant-step calculation.
     ratio = (num.a_max + 2.0) / 2.0
     steps = np.arange(num.n_a) / (num.n_a - 1)
     a = 2.0 * ratio ** steps - 2.0

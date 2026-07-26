@@ -45,7 +45,7 @@ _GOLDEN = (np.sqrt(5.0) - 1.0) / 2.0
 # --------------------------------------------------------------------------- #
 @dataclass(frozen=True)
 class Prices:
-    """Aggregate prices, constant over the business cycle (Section II.B)."""
+    """Aggregate prices, constant over the business cycle (Section II.B)"""
 
     w: float             #: wage per efficiency unit of labour
     r: float             #: monthly net interest rate
@@ -56,7 +56,7 @@ class Prices:
     def from_kl(cls, cal: Calibration, kl: float, avg_earnings: float,
                 transfer: float) -> "Prices":
         """Cobb-Douglas prices implied by capital per efficiency unit
-        (Section II.A): w = (1-a) (K/L)^a,  r = a (K/L)^(a-1) - delta."""
+        (Section II.A): w = (1-a) (K/L)^a,  r = a (K/L)^(a-1) - delta"""
         a = cal.capital_share
         return cls(w=(1.0 - a) * kl ** a,
                    r=a * kl ** (a - 1.0) - cal.depreciation,
@@ -79,7 +79,7 @@ def ui_schedule(cal: Calibration, grids: Grids, prices: Prices) -> NDArray:
 
 
 def cash_on_hand(cal: Calibration, grids: Grids, prices: Prices) -> dict:
-    """Resources available before the savings choice, by labour-market state."""
+    """Resources available before the savings choice, by labour-market state"""
     gross = (1.0 + prices.r) * grids.a + prices.transfer          # (A,)
     b = ui_schedule(cal, grids, prices)
     return {
@@ -98,7 +98,7 @@ def cash_on_hand(cal: Calibration, grids: Grids, prices: Prices) -> dict:
 # --------------------------------------------------------------------------- #
 @dataclass
 class Values:
-    """The five value functions (shapes in the module docstring)."""
+    """The five value functions (shapes in the module docstring)"""
 
     W: NDArray    # (A, Z, Q)
     UE: NDArray   # (A, Z, G)
@@ -155,8 +155,8 @@ def continuation_values(v: Values, fr: Frictions, grids: Grids) -> Continuation:
         L      = E_q' max{W(q), W(q'), J_N}   the on-the-job ladder: keep the
                                               better of current and outside q
 
-    A worker who stays employed and later quits is NOT eligible (hence J_N in
-    V and L); a separated worker IS eligible (Section I.C).  The employed
+    A worker who stays employed and later quits is not eligible (hence J_N in
+    V and L). A separated worker IS eligible (Section I.C).  The employed
     continuation mixes the four mutually exclusive events of Section I.B:
 
         (1-sigma-lambda_e) V  +  lambda_e L
@@ -207,7 +207,7 @@ def continuation_values(v: Values, fr: Frictions, grids: Grids) -> Continuation:
 # Savings choice                                                               #
 # --------------------------------------------------------------------------- #
 def interp_at(grid: NDArray, table: NDArray, x: NDArray) -> NDArray:
-    """Linear interpolation of ``table`` (n, *S) along axis 0 at points ``x`` (*S)."""
+    """Linear interpolation of ``table`` (n, *S) along axis 0 at points ``x`` (*S)"""
     n = grid.size
     xc = np.clip(x, grid[0], grid[-1])
     i = np.clip(np.searchsorted(grid, xc, side="right") - 1, 0, n - 2)
@@ -267,7 +267,8 @@ def maximize_savings(coh: NDArray, R: NDArray, a_grid: NDArray, beta: float,
 
 def evaluate_savings(coh: NDArray, R: NDArray, a_grid: NDArray, beta: float,
                      policy: NDArray, num: Numerics) -> NDArray:
-    """Value of a *fixed* savings policy (used by the acceleration sweeps)."""
+    """Value of a fixed savings policy, with no optimisation.  Used by the
+    Howard acceleration step in :func:`solve_household`"""
     table = np.broadcast_to(R[:, None, ...], (R.shape[0],) + coh.shape)
     return _objective(policy, coh, table, a_grid, beta, num)
 
@@ -289,17 +290,18 @@ def solve_household(cal: Calibration, num: Numerics, grids: Grids,
                     prices: Prices, fr: Frictions, *,
                     v_init: Values | None = None,
                     verbose: bool = False) -> tuple[Values, Policies, int]:
-    """Solve the five-problem Bellman system by value-function iteration.
+    """Solve the five-problem Bellman system by value-function iteration
 
-    Each sweep computes the expectation (``continuation_values``) and
-    re-optimises savings at every node; between sweeps the value is updated a
-    number of times at the *fixed* new policy (Howard/modified policy
-    iteration), which accelerates convergence without changing the fixed
-    point.  Convergence requires both values and policies to settle.
+    Each iteration first computes the expected continuation values and
+    re-optimises the savings choice at every grid point.  The value is then
+    updated several more times with that savings choice held fixed, with
+    no further optimisation  costs (Howard's policy-improvement idea).  This
+    accelerates convergence without changing the fixed point.  The loop stops
+    once both the values and the savings choices have settled.
 
     Work disutility alpha and search cost gamma are additive constants, so
-    they are applied after the savings maximisation; this also makes the
-    UE/UN problems gamma-free (see :class:`Policies`).
+    they are applied after the savings maximisation.  This also makes the
+    UE/UN savings problems independent of gamma.
     """
     coh = cash_on_hand(cal, grids, prices)
     a, beta, gam = grids.a, cal.beta, grids.gamma
@@ -312,7 +314,8 @@ def solve_household(cal: Calibration, num: Numerics, grids: Grids,
     for it in range(1, num.max_value_iter + 1):
         R = continuation_values(v, fr, grids)
 
-        # Optimisation sweep (one per problem; disutility applied afterwards).
+        # Re-optimise the savings choice at every grid point, one problem at a
+        # time (the activity disutility is an additive constant, added after).
         pW, vW = maximize_savings(coh["W"], R.W, a, beta, num)
         pUE, vUE = maximize_savings(coh["UE"], R.UE, a, beta, num)
         pUN, vUN = maximize_savings(coh["UN"], R.UN, a, beta, num)
@@ -321,7 +324,7 @@ def solve_household(cal: Calibration, num: Numerics, grids: Grids,
         new_pol = Policies(W=pW, UE=pUE, UN=pUN, OE=pOE, ON=pON)
         new_v = _assemble(vW - cal.alpha, vUE, vUN, vOE, vON, gam)
 
-        # Policy-evaluation sweeps at the fixed new policy.
+        # Update the value  with the savings choice held fixed (Howard acceleration)
         for _ in range(num.howard_steps):
             R = continuation_values(new_v, fr, grids)
             new_v = _assemble(
@@ -339,7 +342,7 @@ def solve_household(cal: Calibration, num: Numerics, grids: Grids,
                     for s in ("W", "UE", "UN", "OE", "ON"))
         v, pol = new_v, new_pol
         if verbose and it % 10 == 0:
-            print(f"    VFI sweep {it:4d}  d_value={err_v:.2e}  d_policy={err_p:.2e}",
+            print(f"    VFI iteration {it:4d}  d_value={err_v:.2e}  d_policy={err_p:.2e}",
                   flush=True)
         if err_v < num.tol_value and err_p < num.tol_value:
             break

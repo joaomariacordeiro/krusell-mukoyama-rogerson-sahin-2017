@@ -16,11 +16,11 @@ from scipy.sparse.linalg import spsolve
 
 
 # --------------------------------------------------------------------------- #
-# Filtering                                                                    #
+# Filtering                                                                   #
 # --------------------------------------------------------------------------- #
 def hp_trend(y: NDArray, lam: float = 1600.0) -> NDArray:
     """Hodrick-Prescott trend: solve (I + lam * D'D) tau = y with D the
-    second-difference operator."""
+    second-difference operator"""
     n = y.size
     if n < 3:
         return y.copy()
@@ -31,23 +31,23 @@ def hp_trend(y: NDArray, lam: float = 1600.0) -> NDArray:
 
 
 def cyclical(x: NDArray, lam: float = 1600.0) -> NDArray:
-    """Cyclical component of log x."""
+    """Cyclical component of log x"""
     lx = np.log(x)
     return lx - hp_trend(lx, lam)
 
 
 def quarterly(x: NDArray, how: str = "mean") -> NDArray:
-    """Aggregate a monthly series to quarters (mean for rates, sum for Y)."""
+    """Aggregate monthly series to quarters (mean for rates, sum for Y)"""
     n = (x.size // 3) * 3
     blocks = x[:n].reshape(-1, 3)
     return blocks.mean(axis=1) if how == "mean" else blocks.sum(axis=1)
 
 
 # --------------------------------------------------------------------------- #
-# Cyclical moments (model columns of Tables 7, 8 panel C, 9)                   #
+# Cyclical moments (model columns of Tables 7, 8 panel C, 9)                  #
 # --------------------------------------------------------------------------- #
 def cycle_statistics(series: dict, burn_in: int) -> dict:
-    """std, corr with output, and AR(1) for the stocks, flows and J2J rate."""
+    """std, corr with output, and AR(1) for the stocks, flows and J2J rate"""
     cyc_y = cyclical(quarterly(series["Y"][burn_in:], "sum"))
 
     def stats(x_monthly: NDArray) -> tuple[float, float, float]:
@@ -78,7 +78,7 @@ def _flow_steady_u(feu, fen, fue, fun, fne, fnu) -> NDArray:
     """Flow-implied steady-state unemployment rate, month by month.
 
     For each month's six transition rates, the stationary distribution of the
-    implied 3x3 chain gives (E*, U*, N*); the series returned is
+    implied 3x3 chain gives (E*, U*, N*). The series returned is
     u* = U* / (E* + U*).  Solved as a 2x2 linear system in (E*, U*) using the
     balance equations with N* = 1 - E* - U*.
     """
@@ -103,9 +103,9 @@ def variance_decomposition(series: dict, burn_in: int) -> dict:
     only one pair of flows vary (the others held at their sample means), and
     attribute ``100 * cov(cyc u*, cyc u*_pair) / var(cyc u*)`` percent to that
     pair.  Shares sum to roughly 100.  This implements the spirit of the
-    Elsby-Hobijn-Sahin (2015) decomposition used in the paper's Table 11; the
-    paper's exact implementation differs in detail, so this exhibit is
-    qualitative (see the comparison report).
+    Elsby-Hobijn-Sahin (2015) decomposition used in the paper's Table 11. The
+    paper's exact implementation differs in detail, so this exrecise is
+    qualitative (see readme and term paper for further details).
     """
     f = {k: series[k][burn_in:] for k in ("EU", "EN", "UE", "UN", "NE", "NU")}
     mean = {k: np.full_like(x, x.mean()) for k, x in f.items()}
