@@ -6,17 +6,13 @@ This repository contains an independent Python replication of the model in:
 
 > Krusell, P., Mukoyama, T., Rogerson, R. and Şahin, A. (2017). "Gross Worker Flows over the Business Cycle". *American Economic Review*, 107(11), 3447–3476.
 
-
-**Scope:** This replicates the model only. The empirical work of the original paper (CPS gross-flow construction, Abowd–Zellner and deNUNification
-corrections, seasonal adjustment, SIPP processing) is not replicated. Calibration targets and parameter values are taken from the paper rather than
-recomputed from microdata.
-
 **Author:** João Maria Cordeiro  
 **Date:** July 2026  
 **Contact:** joaomariacordeiro@gmail.com
 
 ## Disclaimer
 
+Replicates the model only. The empirical work of the original paper (CPS gross-flow construction, Abowd–Zellner and deNUNification corrections, seasonal adjustment, SIPP processing) is not replicated. Calibration targets and parameter values are taken from the paper rather than recomputed from microdata.
 Any errors are my own.
 
 ## Data and calibration availability
