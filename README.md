@@ -8,8 +8,6 @@ This repository contains an independent Python replication of the model in:
 > Flows over the Business Cycle". *American Economic Review*, 107(11),
 > 3447–3476.
 
-The replication was produced for the course **Macroeconomics with Micro Data**
-(2nd-year PhD, Goethe University Frankfurt).
 
 **Scope.** This replicates the **model only**. The empirical work of the
 original paper (CPS gross-flow construction, Abowd–Zellner and deNUNification
@@ -17,11 +15,9 @@ corrections, seasonal adjustment, SIPP processing) is **not** replicated.
 Calibration targets and parameter values are taken from the paper rather than
 recomputed from microdata.
 
-| | |
-|---|---|
-| Author | João Maria Cordeiro |
-| Date | July 2026 |
-| Contact | joaomariacordeiro@gmail.com |
+**Author:** João Maria Cordeiro  
+**Date:** March 2026  
+**Contact:** joaomariacordeiro@gmail.com
 
 ## Disclaimer
 
