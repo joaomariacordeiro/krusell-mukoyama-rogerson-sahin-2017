@@ -1,0 +1,45 @@
+std_urate 0.121
+std_lfpr 0.0015
+std_E 0.0096
+
+corr_urateY -0.993
+corr_lfprY 0.371
+corr_EY 0.995
+
+autocorr_urate 0.873
+autocorr_lfpr 0.705
+autocorr_E 0.886
+
+std_feu 0.0890
+std_fen 0.0566
+std_fue 0.0881
+std_fun 0.0285
+std_fne 0.0505
+std_fnu 0.0767
+std_fjs 0.0980
+corr_feuY -0.785
+corr_fenY 0.205
+corr_fueY 0.689
+corr_funY 0.467
+corr_fneY 0.568
+corr_fnuY -0.958
+corr_fjsY 0.544
+autocorr_feu 0.764
+autocorr_fen 0.209
+autocorr_fue 0.703
+autocorr_fun 0.343
+autocorr_fne 0.657
+autocorr_fnu 0.871
+autocorr_fjs 0.720
+std_w1 0.0010
+std_w2 0.0000
+std_wq 0.0009
+std_wz 0.0013
+corr_w1Y 0.440
+corr_w2Y 0.044
+corr_wqY 0.682
+corr_wzY -0.068
+autocorr_w1 0.478
+autocorr_w2 0.994
+autocorr_wq 0.953
+autocorr_wz 0.629

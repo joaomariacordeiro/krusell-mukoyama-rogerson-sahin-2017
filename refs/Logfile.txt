@@ -1,0 +1,1128 @@
+
+rhop =     0.996170
+
+stdeps =     0.095650
+
+wage =   3.009378
+
+netirate =   0.003282
+
+check: sum fw    0.600000
+
+check: sum fue    0.100000
+
+check: sum fun    0.000000
+
+check: sum foe    0.200000
+
+check: sum fon    0.100000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw    0.616458
+
+check: sum fue    0.027458
+
+check: sum fun    0.017634
+
+check: sum foe    0.000077
+
+check: sum fon    0.338374
+
+average productivity    2.478000
+
+average wealth  200.107699
+
+ThresW(1) =      3
+
+ThresW(2) =     15
+
+ThresW(3) =     72
+
+ThresW(4) =    258
+
+EE flow =     0.949995
+
+JS flow =     0.022051
+
+EU flow =     0.014179
+
+EN flow =     0.013775
+
+UE flow =     0.219023
+
+UU flow =     0.658254
+
+UN flow =     0.122723
+
+NE flow =     0.021735
+
+NU flow =     0.019705
+
+NN flow =     0.958560
+
+avg wage gain =     0.032842
+
+urate =     0.068160
+
+lfpr =     0.661549
+
+total labor income (before tax) =     4.631426
+
+total ui payments =     0.034353
+
+fraction of ui =     0.007417
+
+total tax =     1.389428
+
+lfpr = (target: 0.66)    0.661549
+
+urate = (target: 0.068)    0.068160
+
+NE flow = (target: 0.022)    0.021735
+
+EU flow = (target: 0.014)    0.014179
+
+JS flow = (target: 0.022)    0.022051
+
+avg wage gain = (target: 0.033)    0.032842
+
+koverl = 129.379631
+
+newkoverl = 130.996334
+
+avgw =   2.489000
+
+newavgw =   2.478000
+
+T =   1.352538
+
+newT =   1.355075
+
+netirate = (1.00327)  0.003273
+
+grossirate =   0.009973
+
+
+Errors in IterationK   1
+
+errkoverl =     1.616704
+
+erravgw =     0.011000
+
+errT =     0.002538
+
+wage =   3.010633
+
+netirate =   0.003273
+
+check: sum fw    0.600000
+
+check: sum fue    0.100000
+
+check: sum fun    0.000000
+
+check: sum foe    0.200000
+
+check: sum fon    0.100000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw    0.616998
+
+check: sum fue    0.027470
+
+check: sum fun    0.017648
+
+check: sum foe    0.000077
+
+check: sum fon    0.337807
+
+average productivity    2.476731
+
+average wealth  198.914534
+
+ThresW(1) =      3
+
+ThresW(2) =     15
+
+ThresW(3) =     71
+
+ThresW(4) =    256
+
+EE flow =     0.949986
+
+JS flow =     0.022050
+
+EU flow =     0.014191
+
+EN flow =     0.013773
+
+UE flow =     0.219132
+
+UU flow =     0.658247
+
+UN flow =     0.122621
+
+NE flow =     0.021802
+
+NU flow =     0.019721
+
+NN flow =     0.958477
+
+avg wage gain =     0.032839
+
+urate =     0.068142
+
+lfpr =     0.662116
+
+total labor income (before tax) =     4.634996
+
+total ui payments =     0.034334
+
+fraction of ui =     0.007408
+
+total tax =     1.390499
+
+lfpr = (target: 0.66)    0.662116
+
+urate = (target: 0.068)    0.068142
+
+NE flow = (target: 0.022)    0.021802
+
+EU flow = (target: 0.014)    0.014191
+
+JS flow = (target: 0.022)    0.022050
+
+avg wage gain = (target: 0.033)    0.032839
+
+koverl = 129.458463
+
+newkoverl = 130.167949
+
+avgw =   2.482865
+
+newavgw =   2.476731
+
+T =   1.354351
+
+newT =   1.356164
+
+netirate = (1.00327)  0.003269
+
+grossirate =   0.009969
+
+
+Errors in IterationK   2
+
+errkoverl =     0.709486
+
+erravgw =     0.006135
+
+errT =     0.001813
+
+wage =   3.011183
+
+netirate =   0.003269
+
+check: sum fw    0.600000
+
+check: sum fue    0.100000
+
+check: sum fun    0.000000
+
+check: sum foe    0.200000
+
+check: sum fon    0.100000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw    0.617210
+
+check: sum fue    0.027500
+
+check: sum fun    0.017648
+
+check: sum foe    0.000077
+
+check: sum fon    0.337565
+
+average productivity    2.476244
+
+average wealth  198.374780
+
+ThresW(1) =      3
+
+ThresW(2) =     15
+
+ThresW(3) =     71
+
+ThresW(4) =    256
+
+EE flow =     0.949990
+
+JS flow =     0.022043
+
+EU flow =     0.014192
+
+EN flow =     0.013774
+
+UE flow =     0.219018
+
+UU flow =     0.658397
+
+UN flow =     0.122584
+
+NE flow =     0.021836
+
+NU flow =     0.019734
+
+NN flow =     0.958429
+
+avg wage gain =     0.032843
+
+urate =     0.068162
+
+lfpr =     0.662358
+
+total labor income (before tax) =     4.636516
+
+total ui payments =     0.034333
+
+fraction of ui =     0.007405
+
+total tax =     1.390955
+
+lfpr = (target: 0.66)    0.662358
+
+urate = (target: 0.068)    0.068162
+
+NE flow = (target: 0.022)    0.021836
+
+EU flow = (target: 0.014)    0.014192
+
+JS flow = (target: 0.022)    0.022043
+
+avg wage gain = (target: 0.033)    0.032843
+
+koverl = 129.492172
+
+newkoverl = 129.795553
+
+avgw =   2.479555
+
+newavgw =   2.476244
+
+T =   1.355486
+
+newT =   1.356622
+
+netirate = (1.00327)  0.003267
+
+grossirate =   0.009967
+
+
+Errors in IterationK   3
+
+errkoverl =     0.303381
+
+erravgw =     0.003311
+
+errT =     0.001135
+
+wage =   3.011418
+
+netirate =   0.003267
+
+check: sum fw    0.600000
+
+check: sum fue    0.100000
+
+check: sum fun    0.000000
+
+check: sum foe    0.200000
+
+check: sum fon    0.100000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw    0.617072
+
+check: sum fue    0.027490
+
+check: sum fun    0.017340
+
+check: sum foe    0.000077
+
+check: sum fon    0.338021
+
+average productivity    2.476714
+
+average wealth  198.122440
+
+ThresW(1) =      2
+
+ThresW(2) =     15
+
+ThresW(3) =     71
+
+ThresW(4) =    255
+
+EE flow =     0.949975
+
+JS flow =     0.022046
+
+EU flow =     0.014191
+
+EN flow =     0.013787
+
+UE flow =     0.218582
+
+UU flow =     0.652087
+
+UN flow =     0.129331
+
+NE flow =     0.022081
+
+NU flow =     0.020230
+
+NN flow =     0.957689
+
+avg wage gain =     0.032845
+
+urate =     0.067729
+
+lfpr =     0.661902
+
+total labor income (before tax) =     4.636705
+
+total ui payments =     0.034322
+
+fraction of ui =     0.007402
+
+total tax =     1.391011
+
+lfpr = (target: 0.66)    0.661902
+
+urate = (target: 0.068)    0.067729
+
+NE flow = (target: 0.022)    0.022081
+
+EU flow = (target: 0.014)    0.014191
+
+JS flow = (target: 0.022)    0.022046
+
+avg wage gain = (target: 0.033)    0.032845
+
+koverl = 129.506447
+
+newkoverl = 129.634931
+
+avgw =   2.478135
+
+newavgw =   2.476714
+
+T =   1.356088
+
+newT =   1.356690
+
+netirate = (1.00327)  0.003266
+
+grossirate =   0.009966
+
+
+Errors in IterationK   4
+
+errkoverl =     0.128484
+
+erravgw =     0.001420
+
+errT =     0.000602
+
+wage =   3.011518
+
+netirate =   0.003266
+
+check: sum fw    0.600000
+
+check: sum fue    0.100000
+
+check: sum fun    0.000000
+
+check: sum foe    0.200000
+
+check: sum fon    0.100000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw    0.616896
+
+check: sum fue    0.027471
+
+check: sum fun    0.017391
+
+check: sum foe    0.000077
+
+check: sum fon    0.338166
+
+average productivity    2.477278
+
+average wealth  197.996968
+
+ThresW(1) =      2
+
+ThresW(2) =     15
+
+ThresW(3) =     71
+
+ThresW(4) =    255
+
+EE flow =     0.949924
+
+JS flow =     0.022060
+
+EU flow =     0.014192
+
+EN flow =     0.013824
+
+UE flow =     0.218700
+
+UU flow =     0.651759
+
+UN flow =     0.129540
+
+NE flow =     0.022090
+
+NU flow =     0.020304
+
+NN flow =     0.957606
+
+avg wage gain =     0.032851
+
+urate =     0.067792
+
+lfpr =     0.661757
+
+total labor income (before tax) =     4.636578
+
+total ui payments =     0.034311
+
+fraction of ui =     0.007400
+
+total tax =     1.390973
+
+lfpr = (target: 0.66)    0.661757
+
+urate = (target: 0.068)    0.067792
+
+NE flow = (target: 0.022)    0.022090
+
+EU flow = (target: 0.014)    0.014192
+
+JS flow = (target: 0.022)    0.022060
+
+avg wage gain = (target: 0.033)    0.032851
+
+koverl = 129.511841
+
+newkoverl = 129.560387
+
+avgw =   2.477706
+
+newavgw =   2.477278
+
+T =   1.356375
+
+newT =   1.356662
+
+netirate = (1.00327)  0.003266
+
+grossirate =   0.009966
+
+
+Errors in IterationK   5
+
+errkoverl =     0.048545
+
+erravgw =     0.000429
+
+errT =     0.000287
+
+wage =   3.011556
+
+netirate =   0.003266
+
+check: sum fw    0.600000
+
+check: sum fue    0.100000
+
+check: sum fun    0.000000
+
+check: sum foe    0.200000
+
+check: sum fon    0.100000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw    0.616895
+
+check: sum fue    0.027470
+
+check: sum fun    0.017395
+
+check: sum foe    0.000077
+
+check: sum fon    0.338163
+
+average productivity    2.477271
+
+average wealth  197.944408
+
+ThresW(1) =      2
+
+ThresW(2) =     15
+
+ThresW(3) =     71
+
+ThresW(4) =    255
+
+EE flow =     0.949919
+
+JS flow =     0.022062
+
+EU flow =     0.014192
+
+EN flow =     0.013827
+
+UE flow =     0.218712
+
+UU flow =     0.651727
+
+UN flow =     0.129561
+
+NE flow =     0.022092
+
+NU flow =     0.020312
+
+NN flow =     0.957596
+
+avg wage gain =     0.032851
+
+urate =     0.067796
+
+lfpr =     0.661760
+
+total labor income (before tax) =     4.636616
+
+total ui payments =     0.034309
+
+fraction of ui =     0.007400
+
+total tax =     1.390985
+
+lfpr = (target: 0.66)    0.661760
+
+urate = (target: 0.068)    0.067796
+
+NE flow = (target: 0.022)    0.022092
+
+EU flow = (target: 0.014)    0.014192
+
+JS flow = (target: 0.022)    0.022062
+
+avg wage gain = (target: 0.033)    0.032851
+
+koverl = 129.513304
+
+newkoverl = 129.526471
+
+avgw =   2.477488
+
+newavgw =   2.477271
+
+T =   1.356526
+
+newT =   1.356676
+
+netirate = (1.00327)  0.003266
+
+grossirate =   0.009966
+
+
+Errors in IterationK   6
+
+errkoverl =     0.013166
+
+erravgw =     0.000218
+
+errT =     0.000150
+
+wage =   3.011566
+
+netirate =   0.003266
+
+check: sum fw    0.600000
+
+check: sum fue    0.100000
+
+check: sum fun    0.000000
+
+check: sum foe    0.200000
+
+check: sum fon    0.100000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw+fue+fun+foe+fon    1.000000
+
+check: sum fw    0.616895
+
+check: sum fue    0.027470
+
+check: sum fun    0.017396
+
+check: sum foe    0.000077
+
+check: sum fon    0.338162
+
+average productivity    2.477277
+
+average wealth  197.933795
+
+ThresW(1) =      2
+
+ThresW(2) =     15
+
+ThresW(3) =     71
+
+ThresW(4) =    255
+
+EE flow =     0.949919
+
+JS flow =     0.022061
+
+EU flow =     0.014192
+
+EN flow =     0.013828
+
+UE flow =     0.218712
+
+UU flow =     0.651723
+
+UN flow =     0.129565
+
+NE flow =     0.022093
+
+NU flow =     0.020313
+
+NN flow =     0.957594
+
+avg wage gain =     0.032852
+
+urate =     0.067798
+
+lfpr =     0.661761
+
+total labor income (before tax) =     4.636645
+
+total ui payments =     0.034309
+
+fraction of ui =     0.007399
+
+total tax =     1.390993
+
+lfpr = (target: 0.66)    0.661761
+
+urate = (target: 0.068)    0.067798
+
+NE flow = (target: 0.022)    0.022093
+
+EU flow = (target: 0.014)    0.014192
+
+JS flow = (target: 0.022)    0.022061
+
+avg wage gain = (target: 0.033)    0.032852
+
+koverl = 129.513889
+
+newkoverl = 129.519153
+
+avgw =   2.477383
+
+newavgw =   2.477277
+
+T =   1.356605
+
+newT =   1.356685
+
+netirate = (1.00327)  0.003266
+
+grossirate =   0.009966
+
+EE flow Q1 =     0.884191
+
+JS flow Q1 =     0.037001
+
+EU flow Q1 =     0.016024
+
+EN flow Q1 =     0.062783
+
+UE flow Q1 =     0.230421
+
+UU flow Q1 =     0.570191
+
+UN flow Q1 =     0.199388
+
+NE flow Q1 =     0.025555
+
+NU flow Q1 =     0.014918
+
+NN flow Q1 =     0.959527
+
+EE flow Q2 =     0.945576
+
+JS flow Q2 =     0.022326
+
+EU flow Q2 =     0.014967
+
+EN flow Q2 =     0.017131
+
+UE flow Q2 =     0.201439
+
+UU flow Q2 =     0.664141
+
+UN flow Q2 =     0.134421
+
+NE flow Q2 =     0.029490
+
+NU flow Q2 =     0.038071
+
+NN flow Q2 =     0.932439
+
+EE flow Q3 =     0.958305
+
+JS flow Q3 =     0.020353
+
+EU flow Q3 =     0.013816
+
+EN flow Q3 =     0.007526
+
+UE flow Q3 =     0.222956
+
+UU flow Q3 =     0.671836
+
+UN flow Q3 =     0.105208
+
+NE flow Q3 =     0.019589
+
+NU flow Q3 =     0.022450
+
+NN flow Q3 =     0.957961
+
+EE flow Q4 =     0.956394
+
+JS flow Q4 =     0.021149
+
+EU flow Q4 =     0.013722
+
+EN flow Q4 =     0.008735
+
+UE flow Q4 =     0.224711
+
+UU flow Q4 =     0.662692
+
+UN flow Q4 =     0.112597
+
+NE flow Q4 =     0.015458
+
+NU flow Q4 =     0.017974
+
+NN flow Q4 =     0.966568
+
+EE flow Q5 =     0.955411
+
+JS flow Q5 =     0.020940
+
+EU flow Q5 =     0.013674
+
+EN flow Q5 =     0.009975
+
+UE flow Q5 =     0.223590
+
+UU flow Q5 =     0.672263
+
+UN flow Q5 =     0.104147
+
+NE flow Q5 =     0.016111
+
+NU flow Q5 =     0.016787
+
+NN flow Q5 =     0.967102
+
+
+The program started at 04-Mar-16 21:40:33
+The program finished at 04-Mar-16 22:10:31
