@@ -267,7 +267,7 @@ def maximize_savings(coh: NDArray, R: NDArray, a_grid: NDArray, beta: float,
 
 def evaluate_savings(coh: NDArray, R: NDArray, a_grid: NDArray, beta: float,
                      policy: NDArray, num: Numerics) -> NDArray:
-    """Value of a fixed savings policy, with no optimisation.  Used by the
+    """Value of a fixed savings policy, with no optimisation. Used by the
     Howard acceleration step in :func:`solve_household`"""
     table = np.broadcast_to(R[:, None, ...], (R.shape[0],) + coh.shape)
     return _objective(policy, coh, table, a_grid, beta, num)

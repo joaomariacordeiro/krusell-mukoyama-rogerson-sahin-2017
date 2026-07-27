@@ -27,7 +27,7 @@ from parameters import Calibration, Numerics
 # Annual -> monthly conversion of the productivity process (Section II.A)      #
 # --------------------------------------------------------------------------- #
 def monthly_persistence(rho_annual: float) -> float:
-    """Monthly AR(1) persistence consistent with the annual estimate """
+    """Monthly AR(1) persistence consistent with the annual estimate"""
     return rho_annual ** (1.0 / 12.0)
 
 

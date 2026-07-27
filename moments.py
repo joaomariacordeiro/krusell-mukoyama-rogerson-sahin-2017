@@ -104,7 +104,7 @@ def variance_decomposition(series: dict, burn_in: int) -> dict:
     attribute ``100 * cov(cyc u*, cyc u*_pair) / var(cyc u*)`` percent to that
     pair.  Shares sum to roughly 100.  This implements the spirit of the
     Elsby-Hobijn-Sahin (2015) decomposition used in the paper's Table 11. The
-    paper's exact implementation differs in detail, so this exrecise is
+    paper's exact implementation differs in detail, so this exercise is
     qualitative (see readme and term paper for further details).
     """
     f = {k: series[k][burn_in:] for k in ("EU", "EN", "UE", "UN", "NE", "NU")}

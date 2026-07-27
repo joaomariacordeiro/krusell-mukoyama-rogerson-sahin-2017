@@ -11,7 +11,7 @@ Pipeline:
        results written to ``outputs/`` and ``figures/``.
 
 Run:  python main.py            full run (price calibration; ~15-30 min)
-      python main.py --quick    solve at the authors' converged price (skips the calibration loop)
+      python main.py --quick    solve at the authors' converged prices (skips the calibration loop)
                                 
 """
 

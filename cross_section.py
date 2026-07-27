@@ -13,7 +13,7 @@ and evenly spaced asset grid:
 The search cost gamma is drawn every period at the moment the
 labour-market choice is made, so last period's draw carries no information
 about this period's.  The non-employed masses therefore need only (a, z).
-The new gamma draw is averaged out inside the choice coeficients below.
+The new gamma draw is averaged out inside the choice coefficients below.
 
 Advancing the distribution by one period follows the timing of the model
 (Section I.B of the paper) in three stages:
@@ -160,7 +160,7 @@ def refine(v: Values, pol: Policies, grids: Grids) -> FineSolution:
 
 
 # --------------------------------------------------------------------------- #
-# Stage-3 choice coeficients (averaged over the q' and gamma draws)           #
+# Stage-3 choice coefficients (averaged over the q' and gamma draws)           #
 # --------------------------------------------------------------------------- #
 # All comparisons are strict: taking a job requires W > max(U, O), and active
 # search requires U > O.  A tie therefore resolves to the more passive state.
@@ -387,7 +387,7 @@ def step(pop: Population, op: Operator, *, count_flows: bool = False,
 
     # --- Employed: four mutually exclusive events (Section I.B) ----------- #
     # Survivors decide under non-eligible values (quitting forfeits UI).
-    # The separated decide under eligeble values.
+    # The separated decide under eligible values.
     m = (1.0 - sig - le) * pW                       # keep job, no outside offer
     kn = op.keep_n
     nW += m * kn.stay
